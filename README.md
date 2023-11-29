@@ -3,11 +3,13 @@ This is a robust algorithm to automatically determine the optimal number of ICs 
 
 Users are required to install RStudio and run the defined CW_ICA function.
 Additionally, there are some packages that are also required to install before conducting CW_ICA:
-1)fastICA
-2)steadyICA
-3)JADE
-4)ggpubr
-5)ggplot2
+1)fastICA_1.2-3
+2)steadyICA_1.0
+3)JADE_2.0-4
+4)ggpubr_0.6.0
+5)ggplot2_3.4.3
+6)MASS_7.3-60         
+
 
 This repository contains three R code files:
 
