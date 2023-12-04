@@ -71,32 +71,13 @@ for (i in 2:replicate) {
 
 ###CW_ICA+Spearman###
 replicate=10
-icabyblock<-matrix(0,nrow=replicate,ncol=min(maxic,ncol(X)/2))
-for (rep in 1:replicate) {
-  set.seed(rep)
-  smp<-sample(c(1:ncol(X)),size = ncol(X)/2)
-  grp1<-X[,smp]
-  grp2<-X[,-smp]
-  for (nic in 2:maxic) {
-    grp1.s <- fastICA(grp1, nic, alg.typ = "deflation", fun = "logcosh", alpha = 1,method = "C", row.norm = FALSE, maxit = 500,tol = 1e-06, verbose = TRUE)$S
-    grp2.s <- fastICA(grp2, nic, alg.typ = "deflation", fun = "logcosh", alpha = 1,method = "C", row.norm = FALSE, maxit = 500,tol = 1e-06, verbose = TRUE)$S
-    grp1.s <- infomaxICA(grp1, nic, whiten =TRUE, maxit=500, eps=1e-06)$S
-    grp2.s <- infomaxICA(grp2, nic, whiten =TRUE, maxit=500, eps=1e-06)$S
-    icabyblock[rep,nic] <- min(apply(as.matrix(abs(cor(cbind(grp1.s,grp2.s),method="spearman")[1:nic,(nic+1):(2*nic)])),2,max))
-  }
-}
-
-#icabyblock<-icabyblock[,-1]
-par(mfrow=c(1,1))
-plot(x=c(2:ncol(icabyblock)),y=icabyblock[1,2:ncol(icabyblock)],type="l",col=1,ylim=c(0,1),xlab="number of ICs",ylab="correlation",main=paste0("CWICA_Spearman_fastICA"))
-for (i in 2:replicate) {
-  lines(x=c(2:ncol(icabyblock)),y=icabyblock[i,2:ncol(icabyblock)],type="l",col=i)
-}
+CWICA_result = CWICA(replicate,X,maxic,"fastICA",plt=T)
 
 
 ######Accuracy test######
 #Start method run
 replicate<-c(5,10,25)
+method = c("fastICA","Infomax")
 result<-NULL
 
 for (i in 1:length(replicate)) {
