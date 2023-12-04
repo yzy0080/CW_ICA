@@ -11,9 +11,12 @@ Additionally, there are some packages that are also required to install before c
 6)MASS_7.3-60         
 
 
-This repository contains three R code files:
+This repository contains four R code files:
 
-The defined function "CWICA_fastinfo" is used for automatically determining optimal number of ICs.
+The tutorial on the CW_ICA method. The simulation results in the manuscript can be reproduced using this tutorial.
+
+
+The defined function "CWICA" is used for automatically determining optimal number of ICs.
 The input arguments of this function are 
 1) Number of repetitions: replicate (numerical value)
 2) Mixed signals: X (length of singal by number of mixed signals)
