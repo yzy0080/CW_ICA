@@ -1,5 +1,5 @@
-CWICA_fastinfo<-function(replicate,X,maxic,algorithm,plt=T){
-  icabyblock<-matrix(0,nrow=replicate,ncol=min(maxic,ncol(X)/2))
+CWICA<-function(replicate,X,maxic,algorithm,plt=F){
+  cw<-matrix(0,nrow=replicate,ncol=min(maxic,ncol(X)/2))
   for (rep in 1:replicate) {
     set.seed(rep)
     smp<-sample(c(1:ncol(X)),size = ncol(X)/2)
@@ -22,24 +22,24 @@ CWICA_fastinfo<-function(replicate,X,maxic,algorithm,plt=T){
         grp1.s <- JADE(grp1, nic, maxit=10000, eps=1e-04)$S
         grp2.s <- JADE(grp2, nic, maxit=10000, eps=1e-04)$S
       }
-      icabyblock[rep,nic] <- min(apply(as.matrix(abs(cor(cbind(grp1.s,grp2.s),method="spearman")[1:nic,(nic+1):(2*nic)])),2,max))
+      cw[rep,nic] <- min(apply(as.matrix(abs(cor(cbind(grp1.s,grp2.s),method="spearman")[1:nic,(nic+1):(2*nic)])),2,max))
     }
   }
-  icabyblock<-icabyblock[,-1]
+  cw<-cw[,-1]
   diff<-matrix(0,nrow = replicate,ncol=8)
   for (col in 1:8) {
-    diff[,col]<-icabyblock[,(col+1)]-icabyblock[,col]
+    diff[,col]<-cw[,(col+1)]-cw[,col]
   }
   vote = mode(apply( diff, 1, which.min))+1
   
   if(plt == T){
-    pdf(file = paste0(algorithm,"_CWICA.pdf"),height = 8,width = 8)
+    #pdf(file = paste0(algorithm,"_CWICA.pdf"),height = 8,width = 8)
     par(mfrow=c(1,1))
-    plot(x=c(2:ncol(icabyblock)),y=icabyblock[1,2:ncol(icabyblock)],type="l",col=1,ylim=c(0,1),xlab="number of ICs",ylab="correlation",main=paste0(algorithm,"_spearman"))
+    plot(x=c(2:ncol(cw)),y=cw[1,2:ncol(cw)],type="l",col=1,ylim=c(0,1),xlab="number of ICs",ylab="correlation",main=paste0(algorithm,"_spearman"))
     for (i in 2:replicate) {
-      lines(x=c(2:ncol(icabyblock)),y=icabyblock[i,2:ncol(icabyblock)],type="l",col=i)
+      lines(x=c(2:ncol(cw)),y=cw[i,2:ncol(cw)],type="l",col=i)
     }
-    dev.off()
+    #dev.off()
   }
   return(vote)
 }
