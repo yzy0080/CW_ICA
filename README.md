@@ -13,7 +13,7 @@ Additionally, there are some packages that are also required to install before c
 
 This repository contains four R code files:
 
-The tutorial on the CW_ICA method. The simulation results in the manuscript can be reproduced using this tutorial.
+The tutorial on the CW_ICA method. The simulation results in the paper can be reproduced using this tutorial.
 
 
 The defined function "CWICA" is used for automatically determining optimal number of ICs.
